@@ -1,50 +1,43 @@
-version: "3.8"
-
 services:
   slskd:
     image: slskd/slskd:latest
     container_name: slskd
     environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=America/Chicago
-      - SLSKD_REMOTE_CONFIGURATION=true
-      - SLSKD_SHARED_DIR=/shared
-      - SLSKD_DOWNLOAD_DIR=/downloads
-    
+    - PUID=1000
+    - PGID=1000
+    - TZ=America/Chicago
+    - SLSKD_REMOTE_CONFIGURATION=true
+    - SLSKD_SHARED_DIR=/shared
+    - SLSKD_DOWNLOAD_DIR=/downloads
     ports:
-      # Web UI / API (HTTP)
-      - target: 5030
-        published: 5030
-        protocol: tcp
-        mode: ingress
-      # Optional HTTPS UI (self-signed)
-      - target: 5031
-        published: 5031
-        protocol: tcp
-        mode: ingress
-      # Soulseek incoming connections
-      - target: 50300
-        published: 50300
-        protocol: tcp
-        mode: ingress 
+    - target: 5030
+      published: 5030
+      protocol: tcp
+      mode: ingress
+    - target: 5031
+      published: 5031
+      protocol: tcp
+      mode: ingress
+    - target: 50300
+      published: 50300
+      protocol: tcp
+      mode: ingress
     volumes:
-      - config:/app
-      - /media/Multimedia/Incoming/complete/lidarr:/downloads
-      - /media/Multimedia/Incoming/incomplete:/incomplete
-      - /media/Multimedia/Music/General Music:/shared
-
+    - slskd-swarm_config:/app
+    - /media/Multimedia/Incoming/complete/lidarr:/downloads
+    - /media/Multimedia/Incoming/incomplete:/incomplete
+    - /media/Multimedia/Music/General Music:/shared
     deploy:
       placement:
         constraints:
-          - node.labels.deployment.target.slskd == true
+        - node.labels.deployment.target.slskd == true
       restart_policy:
         condition: any
     networks:
-      - media
-
+    - media
 networks:
   media:
     external: true
 volumes:
-  config:
+  slskd-swarm_config:
+    name: slskd-swarm_config
