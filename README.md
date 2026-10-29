@@ -8,8 +8,8 @@ deployment and polls this repository for changes.
 | Portainer stack id | 30 |
 | Portainer host | ore-dock-110-4 |
 | Endpoint | - (id -) |
-| Swarm | whofnrgxv5ig |
-| Live service | slskd-swarm_slskd |
+| Swarm | True |
+| Live service | svc:slskd-swarm_slskd |
 | Git repo | https://github.com/chaseoriginal/slskd-swarm |
 | Compose file | `docker-compose.yml` |
 | Auto-update poll | every 900s |
@@ -39,8 +39,8 @@ deployment and polls this repository for changes.
 ## Verifying a deployment
 
 ```bash
-docker service ls --filter name=slskd-swarm_slskd
-docker service inspect slskd-swarm_slskd --format '{{json .Spec.TaskTemplate.ContainerSpec.Mounts}}'
+docker service ls --filter name=svc:slskd-swarm_slskd
+docker service inspect svc:slskd-swarm_slskd --format '{{json .Spec.TaskTemplate.ContainerSpec.Mounts}}'
 ```
 
 A healthy stack shows `1/1` and the same volume names as before.
