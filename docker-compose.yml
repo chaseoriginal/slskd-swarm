@@ -1,6 +1,6 @@
 services:
   slskd:
-    image: slskd/slskd:latest
+    image: 0.26.2
     container_name: slskd
     environment:
     - PUID=1000
